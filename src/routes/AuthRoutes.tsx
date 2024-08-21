@@ -1,8 +1,8 @@
-import Main from "../pages/Main";
+import Login from "../pages/auth/Login";
 
 const AuthRoutes = {
     path: "/login",
-    element: <Main />
+    element: <Login />
 }
 
 export default AuthRoutes;
