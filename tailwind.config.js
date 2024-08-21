@@ -10,6 +10,7 @@ export default {
         primary: "#2BD17E",
         error: "#EB5757",
         card: "#092C39",
+        cardhover: "#0829357a",
       },
     },
   },
