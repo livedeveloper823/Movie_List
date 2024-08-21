@@ -20,7 +20,7 @@ export interface VideoCardProps {
 export interface VideoProps {
     title: string;
     image: string;
-    publichingDate: number;
+    publishingDate: string;
 }
 
 export interface VideoStateProps {

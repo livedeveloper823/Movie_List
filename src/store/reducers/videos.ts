@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { VideoStateProps } from "../../types";
+import { VideoProps, VideoStateProps } from "../../types";
 import instance from "../../utils/axios";
 import { dispatch } from "..";
 
@@ -29,7 +29,19 @@ export const getAllVideosData = () => {
         try {
             const response = instance.get("/videos/all")
             dispatch(videos.actions.getVideoData(response))
-        } catch(error) {
+        } catch (error) {
+            dispatch(videos.actions.hasError(error))
+        }
+    }
+}
+
+export const addVideosData = (data: VideoProps) => {
+    return async () => {
+        try {
+            const response = instance.post("/videos/addvideo", data)
+            console.log(response);
+            dispatch(videos.actions.addVideoData(response))
+        } catch (error) {
             dispatch(videos.actions.hasError(error))
         }
     }
