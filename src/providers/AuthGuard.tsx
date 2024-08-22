@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, ReactNode } from "react";
-import { useSelector } from "../store";
 
 interface AuthGuardProps {
     children: ReactNode;
@@ -8,13 +7,15 @@ interface AuthGuardProps {
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
-    const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+    const isLoggedIn = localStorage.getItem("isLoggedIn")
+    console.log(isLoggedIn);
+    
     const navigate = useNavigate();
     const location = useLocation();
 
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        if (isLoggedIn != "true") {
             navigate("/", { replace: true });
         }
     }, [isLoggedIn, navigate, location]);

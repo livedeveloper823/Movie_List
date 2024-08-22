@@ -1,15 +1,37 @@
 import image from '../../assets/image.png'
 import { useNavigate } from 'react-router'
-import useAuth from '../../hooks/useAuth'
+import { useState } from 'react'
+import { UserProfileProps } from '../../types'
+import { dispatch } from '../../store'
+import { getUserInfo } from '../../store/reducers/auth'
 
 const Login = () => {
-
-    const Login = useAuth()
+    const [userData, setUserData] = useState<UserProfileProps>({
+        email: "",
+        password: "",
+    });
+    
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        Login
-        navigate("/main")
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUserData((prevData) => ({
+            ...prevData,
+            email: e.target.value,
+        }));
+    };
+
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUserData((prevData) => ({
+            ...prevData,
+            password: e.target.value,
+        }));
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); // Prevent the default form submission
+        dispatch(() => getUserInfo(userData))
+        localStorage.setItem("isLoggedIn", "true");
+        navigate("/main");
     }
 
     return (
@@ -20,8 +42,8 @@ const Login = () => {
                         Sign in
                     </div>
                     <div className="flex flex-col gap-5">
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input type="email" placeholder="Email" onChange={handleEmailChange} />
+                        <input type="password" placeholder="Password" onChange={handlePasswordChange} />
                         <label htmlFor="remember" className="flex gap-1 justify-center" >
                             <input name="remember" type="checkbox" />
                             Remember me
@@ -34,6 +56,7 @@ const Login = () => {
             </form>
             <img src={image} alt="" className='w-full absolute bottom-0' />
         </div>
+        
     )
 }
 

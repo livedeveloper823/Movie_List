@@ -1,47 +1,39 @@
-import { AuthActionProps, AuthProps } from "../../types";
-import { LOGIN, LOGOUT, REGISTER } from "./action";
+import { createSlice } from "@reduxjs/toolkit";
+import instance from "../../utils/axios";
+import { dispatch } from "..";
+import { userStateProps } from "../../types";
 
-export const initialState: AuthProps = {
-    isLoggedIn: false,
-    isInitialized: false,
-    user: null,
+
+const initialState: userStateProps = {
+  error: null,
+  user: null,
+  isLoggedIn: false
 }
 
-// ==============================|| AUTH REDUCER ||============================== //
-
-const auth = (state = initialState, action: AuthActionProps) => {
-    switch (action.type) {
-        case LOGIN: {
-            const { user } = action.payload!;
-            return {
-                ...state,
-                isLoggedIn: true,
-                user
-            }
-        }
-        case REGISTER: {
-            const { user } = action.payload!;
-            return {
-                ...state,
-                // isLoggedIn: true,
-                isInitialized: true,
-                user
-            }
-        }
-        case LOGOUT: {
-            return {
-                ...state,
-                isInitialized: true,
-                isLoggedIn: false,
-                user: null
-            }
-        }
-        default: {
-            return {
-                ...state
-            }
-        }
+const userInfo = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    logIn(state, action) {
+      state.user = action.payload;
+      state.isLoggedIn = true;
+    },
+    hasError(state, action) {
+      state.error = action.payload
     }
-}
+  }
+})
 
-export default auth;
+
+
+export const getUserInfo = async (data: { email: string; password: string }) => {
+  try {
+    const response = await instance.post("/auth/login", data);
+    return dispatch(userInfo.actions.logIn(response.data.data)); // Adjust based on your API response structure
+  } catch (error) {
+    return console.log(error);
+  }
+};
+
+
+export default userInfo.reducer;

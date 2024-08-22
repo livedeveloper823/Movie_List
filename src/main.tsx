@@ -5,7 +5,7 @@ import './index.css'
 
 import { BrowserRouter } from 'react-router-dom'
 import { Provider as ReduxProvider } from 'react-redux';
-import { JWTProvider as AuthProvider } from './contexts/JWTContext.tsx'
+import AuthProvider from './providers/AuthProvider.tsx'
 import { store } from './store'
 import NotificationProvider from './contexts/NotificationContext.tsx'
 

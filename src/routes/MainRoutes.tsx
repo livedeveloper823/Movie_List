@@ -1,4 +1,4 @@
-import AuthGuard from "../contexts/AuthGuard";
+import AuthGuard from "../providers/AuthGuard";
 import Login from "../pages/auth/Login";
 import Main from "../pages/Main";
 import AddMovie from "../pages/movies/Add";
@@ -14,9 +14,9 @@ const MianRoutes = {
         {
             path: "/main",
             element: 
-            // <AuthGuard>
+            <AuthGuard>
                 <Main />
-            // </AuthGuard>
+             </AuthGuard>
         },
         {
             path: "/movies/add",

@@ -3,11 +3,13 @@ import image from '../../assets/image.png';
 import SubmitForm from "../../components/SubmitForm";
 import { useDispatch, useSelector } from "../../store";
 import { useState, ChangeEvent, useEffect } from "react";
-import { getVideosInfo } from "../../store/reducers/videos";
+import { getVideoInfo, updateVideoData } from "../../store/reducers/videos";
 import { VideoProps } from "../../types";
+import { useNavigate } from "react-router";
 
 const EditMovie: React.FC = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const video = useSelector((state) => state.videos.video);
     console.log("video", video, typeof(video));
 
@@ -19,7 +21,7 @@ const EditMovie: React.FC = () => {
         const queryParams = new URLSearchParams(window.location.search);
         setId(queryParams.get('id'));
         if(id != null ){
-            dispatch(getVideosInfo(id))
+            dispatch(getVideoInfo(id))
         }
     }, [id]); // Run this effect only once when the component mounts
 
@@ -30,7 +32,6 @@ const EditMovie: React.FC = () => {
         publishingYear: video?.publishingYear || '',
     });
     console.log(newVideoData);
-    
     useEffect(() => {
         if (video) {
             setNewVideoData({
@@ -73,6 +74,11 @@ const EditMovie: React.FC = () => {
         });
     };
 
+    const handleUpdate = () => {
+        updateVideoData(id, newVideoData);
+        navigate("/main")
+    }
+
     return (
         <>
             <div className="text-white font-montserrat xl:px-80 lg:px-40 md:px-20 px-10 xl:pt-40 pt-20">
@@ -101,7 +107,7 @@ const EditMovie: React.FC = () => {
                     </div>
                     <div className="order-3">
                         <div className="flex lg:justify-start justify-center">
-                            <SubmitForm />
+                            <SubmitForm onClick={handleUpdate} />
                         </div>
                     </div>
                 </div>

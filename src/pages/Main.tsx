@@ -7,13 +7,16 @@ import { useDispatch, useSelector } from '../store';
 import { getAllVideosData } from '../store/reducers/videos';
 
 const Main = () => {
+	// console.log("Main called ========>")
 	const videos = useSelector((state) => state.videos)
 	const dispatch = useDispatch();
-	console.log("videos===>", videos);
 
 	const navigate = useNavigate();
 	useEffect(() => { dispatch(getAllVideosData()) }, [])
-
+	const handleLogout = () => {
+		localStorage.removeItem("isLoggedIn")
+		navigate('/');
+	}
 	return (
 		<div className='text-white font-montserrat'>
 			{videos.videos.length == 0 ?
@@ -33,7 +36,7 @@ const Main = () => {
 							<p className="sm:text-5xl text-3xl font-semibold">My movies</p>
 							<CirclePlus width={32} className='hover:cursor-pointer' onClick={() => navigate("/movies/add")} />
 						</div>
-						<div className='flex items-center gap-2 hover:cursor-pointer'>
+						<div className='flex items-center gap-2 hover:cursor-pointer' onClick={handleLogout}>
 							<p className='font-bold md:visible invisible'>Logout</p>
 							<LogOut />
 						</div>
@@ -41,7 +44,7 @@ const Main = () => {
 					<div className='flex justify-center items-center lg:mt-40 ms:mt-20 mt-10'>
 						<div className='grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 md:gap-10 gap-4'>
 							{
-								 videos && videos.videos.map((item, index) =>
+								videos && videos.videos.map((item, index) =>
 									<VideoCard key={index} title={item.title} image={item.image} publishingYear={item.publishingYear} onClick={() => navigate(`/movies/edit?id=${item._id}`)} />
 								)
 							}

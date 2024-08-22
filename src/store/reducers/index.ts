@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import videos from "./videos";
-import user from "./user";
+import auth from "./auth";
 
 const reducers = combineReducers({
     videos,
-    user,
+    auth,
 })
 
 export default reducers;

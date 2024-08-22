@@ -16,7 +16,7 @@ export interface VideoCardProps {
 
 export interface VideoProps {
     _id?: string;
-    title: string ;
+    title: string;
     image: string;
     publishingYear: string;
 }
@@ -24,14 +24,14 @@ export interface VideoProps {
 export interface VideoStateProps {
     error: string | null;
     videos: VideoProps[];
-    video:VideoProps | null;
+    video: VideoProps | null;
 }
 
 export interface UserProfileProps {
     _id?: string | null,
-    email?: string,
-    username: string,
-    password?: string,
+    email: string,
+    username?: string,
+    password: string ,
 }
 // Auth
 export interface AuthProps {
@@ -60,7 +60,11 @@ export type JWTContextType = {
 };
 
 export interface userStateProps {
-    user: UserProfileProps,
+    user: UserProfileProps | null,
     error: string | null,
     isLoggedIn: boolean,
 }
+
+export type KeyedObject = {
+    [key: string]: string | number | KeyedObject | any;
+  };
