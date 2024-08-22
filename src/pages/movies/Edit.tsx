@@ -3,20 +3,13 @@ import image from '../../assets/image.png';
 import SubmitForm from "../../components/SubmitForm";
 import { useDispatch, useSelector } from "../../store";
 import { useState, ChangeEvent, useEffect } from "react";
-<<<<<<< HEAD
 import { getVideoInfo, updateVideoData } from "../../store/reducers/videos";
-=======
-import { getVideosInfo } from "../../store/reducers/videos";
->>>>>>> 13ba1d0d49e446508c3851547c3475277045da38
 import { VideoProps } from "../../types";
 import { useNavigate } from "react-router";
 
 const EditMovie: React.FC = () => {
     const dispatch = useDispatch();
-<<<<<<< HEAD
     const navigate = useNavigate()
-=======
->>>>>>> 13ba1d0d49e446508c3851547c3475277045da38
     const video = useSelector((state) => state.videos.video);
     console.log("video", video, typeof(video));
 
@@ -28,11 +21,7 @@ const EditMovie: React.FC = () => {
         const queryParams = new URLSearchParams(window.location.search);
         setId(queryParams.get('id'));
         if(id != null ){
-<<<<<<< HEAD
             dispatch(getVideoInfo(id))
-=======
-            dispatch(getVideosInfo(id))
->>>>>>> 13ba1d0d49e446508c3851547c3475277045da38
         }
     }, [id]); // Run this effect only once when the component mounts
 
@@ -43,10 +32,6 @@ const EditMovie: React.FC = () => {
         publishingYear: video?.publishingYear || '',
     });
     console.log(newVideoData);
-<<<<<<< HEAD
-=======
-    
->>>>>>> 13ba1d0d49e446508c3851547c3475277045da38
     useEffect(() => {
         if (video) {
             setNewVideoData({
@@ -63,7 +48,6 @@ const EditMovie: React.FC = () => {
             ...newVideoData,
             title: videoTitle,
         });
-<<<<<<< HEAD
     };
 
     const photoUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -94,33 +78,6 @@ const EditMovie: React.FC = () => {
         updateVideoData(id, newVideoData);
         navigate("/main")
     }
-=======
-    };
-
-    const photoUpload = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const reader = new FileReader();
-        const file = e.target.files?.[0]; // Use optional chaining to handle undefined
-
-        if (file) {
-            reader.onloadend = () => {
-                setNewVideoData({
-                    ...newVideoData,
-                    image: reader.result as string,
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const handleYearChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const publishingYear = e.target.value;
-        setNewVideoData({
-            ...newVideoData,
-            publishingYear: publishingYear,
-        });
-    };
->>>>>>> 13ba1d0d49e446508c3851547c3475277045da38
 
     return (
         <>
