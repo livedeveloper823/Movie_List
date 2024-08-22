@@ -33,6 +33,7 @@ const Login = () => {
         dispatch(() => getUserInfo(userData))
         navigate("/main");
     }
+    
     useEffect(() => {
         // Email Validation
 
@@ -59,7 +60,7 @@ const Login = () => {
         } else {
             setPassValidateMsg("Password is strong!");
         }
-    },[])
+    },[userData])
 
     return (
         <div className='h-screen'>

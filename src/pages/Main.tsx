@@ -2,12 +2,12 @@ import { useNavigate } from 'react-router';
 import image from '../assets/image.png'
 import VideoCard from '../components/VideoCard';
 import { CirclePlus, LogOut } from "lucide-react";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from '../store';
 import { getAllVideosData } from '../store/reducers/videos';
 
 const Main = () => {
-	// console.log("Main called ========>")
+	const [page, setPage] = useState(0)
 	const videos = useSelector((state) => state.videos)
 	const dispatch = useDispatch();
 
@@ -17,6 +17,17 @@ const Main = () => {
 		localStorage.removeItem("isLoggedIn")
 		navigate('/');
 	}
+	// pagination
+	const Prev = () => {
+		setPage(Math.max(page - 1, 0));
+	}
+
+	const Next = () => {
+		setPage(Math.min(page + 1, Math.floor(videos.videos.length / 8)))
+	}
+
+	const pages = Array.from({ length: Math.floor(videos.videos.length / 8) + 1 }, (_, index) => index);
+
 	return (
 		<div className='text-white font-montserrat'>
 			{videos.videos.length == 0 ?
@@ -44,17 +55,30 @@ const Main = () => {
 					<div className='flex justify-center items-center lg:mt-40 ms:mt-20 mt-10'>
 						<div className='grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 md:gap-10 gap-4'>
 							{
-								videos && videos.videos.map((item, index) =>
-									<VideoCard key={index} title={item.title} image={item.image} publishingYear={item.publishingYear} onClick={() => navigate(`/movies/edit?id=${item._id}`)} />
-								)
+								videos && videos.videos
+									.filter((item, index) =>
+										index >= page * 8 && index < (page + 1) * 8
+									)
+									.map((item, index) => (
+										<VideoCard
+											key={index}
+											title={item.title}
+											image={item.image}
+											publishingYear={item.publishingYear}
+											onClick={() => navigate(`/movies/edit?id=${item._id}`)}
+										/>
+									))
 							}
 						</div>
 					</div>
 					<div className='md:visible invisible flex justify-center items-center gap-4 text-center mt-20'>
-						<div>Prev</div>
-						<div className='bg-card active:bg-primary w-10 py-2 rounded-md'>1</div>
-						<div className='bg-card active:bg-primary w-10 py-2 rounded-md'>2</div>
-						<div>Next</div>
+						<div className='hover:cursor-pointer' onClick={Prev}>Prev</div>
+						{pages.map((item, index) =>
+							page == item ?
+								<div key={index} className='bg-primary w-10 py-2 rounded-md'>{item + 1}</div>
+								: <div key={index} className='bg-card w-10 py-2 rounded-md'>{item + 1}</div>
+						)}
+						<div className='hover:cursor-pointer' onClick={Next}>Next</div>
 					</div>
 				</div>
 			}
