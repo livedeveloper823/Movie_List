@@ -60,7 +60,11 @@ export type JWTContextType = {
 };
 
 export interface userStateProps {
+<<<<<<< HEAD
     user: UserProfileProps | null,
+=======
+    user: UserProfileProps,
+>>>>>>> 13ba1d0d49e446508c3851547c3475277045da38
     error: string | null,
     isLoggedIn: boolean,
 }
