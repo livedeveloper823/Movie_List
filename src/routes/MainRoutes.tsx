@@ -13,9 +13,10 @@ const MianRoutes = {
         },
         {
             path: "/main",
-            element: <AuthGuard>
+            element: 
+            // <AuthGuard>
                 <Main />
-            </AuthGuard>
+            // </AuthGuard>
         },
         {
             path: "/movies/add",
