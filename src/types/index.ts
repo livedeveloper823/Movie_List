@@ -11,25 +11,24 @@ export interface BtnProps {
 
 
 export interface VideoCardProps {
-    title: string;
-    image: string;
-    publichingDate: number;
     onClick?: () => void;
 }
 
 export interface VideoProps {
-    title: string;
+    _id?: string;
+    title: string ;
     image: string;
-    publishingDate: string;
+    publishingYear: string;
 }
 
 export interface VideoStateProps {
     error: string | null;
-    videos: VideoProps[],
+    videos: VideoProps[];
+    video:VideoProps | null;
 }
 
 export interface UserProfileProps {
-    id?: number,
+    _id?: string | null,
     email?: string,
     username: string,
     password?: string,
@@ -54,14 +53,14 @@ export type JWTContextType = {
     logout: () => void;
     login: (email: string, password: string) => Promise<void>;
     register: (email: string, password: string, username: string,) => Promise<void>;
- 
+
     // addEvent: ();
     resetPassword?: (email: string) => Promise<void>;
     updateProfile?: VoidFunction;
 };
 
-export interface userStateProps{
-    user:UserProfileProps,
+export interface userStateProps {
+    user: UserProfileProps,
     error: string | null,
     isLoggedIn: boolean,
 }

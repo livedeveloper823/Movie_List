@@ -6,6 +6,7 @@ import { dispatch } from "..";
 const initialState: VideoStateProps = {
     error: null,
     videos: [],
+    video: null
 }
 
 const videos = createSlice({
@@ -20,6 +21,9 @@ const videos = createSlice({
         },
         getVideoData(state, action) {
             state.videos = action.payload
+        },
+        getVideoInfo(state, action) {
+            state.video = action.payload
         }
     }
 })
@@ -27,8 +31,22 @@ const videos = createSlice({
 export const getAllVideosData = () => {
     return async () => {
         try {
-            const response = instance.get("/videos/all")
-            dispatch(videos.actions.getVideoData(response))
+            const response = await instance.get("/videos/all")
+            console.log("/videos/all", response);
+            dispatch(videos.actions.getVideoData(response.data.data.videos))
+        } catch (error) {
+            dispatch(videos.actions.hasError(error))
+        }
+    }
+}
+
+export const getVideosInfo = (id: string | null) => {
+    
+    return async () => {
+        try {
+            const response = await instance.get(`/videos/video/${id}`)
+            console.log(response);
+            dispatch(videos.actions.getVideoInfo(response.data.data))
         } catch (error) {
             dispatch(videos.actions.hasError(error))
         }
@@ -38,8 +56,7 @@ export const getAllVideosData = () => {
 export const addVideosData = (data: VideoProps) => {
     return async () => {
         try {
-            const response = instance.post("/videos/addvideo", data)
-            console.log(response);
+            const response = await instance.post("/videos/addvideo", data)
             dispatch(videos.actions.addVideoData(response))
         } catch (error) {
             dispatch(videos.actions.hasError(error))

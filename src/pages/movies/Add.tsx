@@ -5,17 +5,19 @@ import { VideoProps } from "../../types";
 import { useDispatch } from "../../store";
 import { useState, ChangeEvent } from "react";
 import { addVideosData } from "../../store/reducers/videos";
+import { useNavigate } from "react-router";
 
 const AddMovie = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [videoData, setVideoData] = useState<VideoProps>({
         title: "",
         image: "",
-        publishingDate: "",
+        publishingYear: "",
     });
-
-    console.log("videodata============>", videoData);
-
+    console.log(videoData);
+    
     const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const videoTitle = e.target.value;
         setVideoData({
@@ -43,12 +45,13 @@ const AddMovie = () => {
         const publishingYear = e.target.value;
         setVideoData({
             ...videoData,
-            publishingDate: publishingYear
+            publishingYear: publishingYear
         })
     }
 
     const handleSubmit = () => {
         dispatch(addVideosData(videoData))
+        navigate("/main")
     }
 
     return (

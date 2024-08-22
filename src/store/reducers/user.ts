@@ -6,7 +6,7 @@ import { userStateProps } from "../../types";
 const initialState: userStateProps = {
     error: null,
     user: {
-        id: 0,
+        _id: '',
         username: '', 
         email: '',
     },
