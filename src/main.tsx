@@ -8,6 +8,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import AuthProvider from './providers/AuthProvider.tsx'
 import { store } from './store'
 import NotificationProvider from './contexts/NotificationContext.tsx'
+import './i18n'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

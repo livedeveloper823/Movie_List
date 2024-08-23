@@ -5,8 +5,17 @@ import { CirclePlus, LogOut } from "lucide-react";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from '../store';
 import { getAllVideosData } from '../store/reducers/videos';
+import { useTranslation } from 'react-i18next';
+import UK from '../assets/countries/uk.png'
+import German from '../assets/countries/german.png'
 
 const Main = () => {
+	// Localization
+	const { t, i18n } = useTranslation()
+	const changeLanguage = (lng: string) => {
+		i18n.changeLanguage(lng);
+	};
+
 	const [page, setPage] = useState(0)
 	const videos = useSelector((state) => state.videos)
 	const dispatch = useDispatch();
@@ -44,12 +53,22 @@ const Main = () => {
 				<div className='2xl:px-40 lg:px-20 px-10 py-40'>
 					<div className='flex justify-between'>
 						<div className="flex sm:gap-5 gap-2 items-center">
-							<p className="sm:text-5xl text-3xl font-semibold">My movies</p>
+							<p className="sm:text-5xl text-3xl font-semibold">{t('Main.my_movies')}</p>
 							<CirclePlus width={32} className='hover:cursor-pointer' onClick={() => navigate("/movies/add")} />
 						</div>
-						<div className='flex items-center gap-2 hover:cursor-pointer' onClick={handleLogout}>
-							<p className='font-bold md:visible invisible'>Logout</p>
-							<LogOut />
+						<div className='flex gap-3'>
+							<div className='flex items-center hover:cursor-pointer' onClick={() => changeLanguage('de')}>
+								<img src={German} width={48} alt="" />
+								<p className='font-bold md:visible invisible'>German</p>
+							</div>
+							<div className='flex items-center hover:cursor-pointer' onClick={() => changeLanguage('en')}>
+								<img src={UK} width={48} alt="" />
+								<p className='font-bold md:visible invisible'>English</p>
+							</div>
+							<div className='flex items-center gap-2 hover:cursor-pointer' onClick={handleLogout}>
+								<p className='font-bold md:visible invisible'>Logout</p>
+								<LogOut />
+							</div>
 						</div>
 					</div>
 					<div className='flex justify-center items-center lg:mt-40 ms:mt-20 mt-10'>
